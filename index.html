@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxury Hotel & Resort</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap");
+      /* Header Styles */
+      header {
+        background-color: var(--primary);
+        padding: 1rem;
+        position: fixed;
+        width: 100%;
+        z-index: 100;
+        opacity: 0;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        color: var(--light);
+        font-size: 2rem;
+        font-weight: bold;
+        font-family: "Lavishly Yours", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: var(--light);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--secondary);
+      }
+
+      .menu-toggle {
+        display: none;
+        color: var(--light);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: block;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: var(--primary);
+          flex-direction: column;
+          padding: 1rem;
+          text-align: center;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-slider {
+        height: 100%;
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .hero-slide {
+        min-width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+
+      .slide-1 {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("./assets/luxurylobby.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .slide-2 {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("./assets/poolview.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .slide-3 {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("./assets/penthouse.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .hero-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: var(--light);
+        width: 80%;
+        z-index: 2;
+        opacity: 0;
+      }
+
+      .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        font-weight: 400;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      .slider-nav {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1rem;
+        z-index: 2;
+      }
+
+      .slider-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .slider-dot.active {
+        background-color: var(--secondary);
+      }
+
+      .cta-button {
+        padding: 0.7rem 3rem;
+        background-color: #e67e22;
+        color: var(--light);
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+        border: none;
+        cursor: pointer;
+      }
+
+      .cta-button:hover {
+        background-color: var(--secondary);
+      }
+
+      /* Rooms Section */
+      .rooms {
+        padding: 4rem 2rem;
+        background-color: var(--light);
+      }
+
+      .rooms h2 {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--primary);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .room-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .room-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .room-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+
+      .room-info {
+        padding: 1.5rem;
+      }
+
+      /* Services Section */
+      .services {
+        padding: 4rem 2rem;
+        background-color: var(--light);
+      }
+
+      .services h2 {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--primary);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .service-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .service-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .service-card i {
+        font-size: 2.5rem;
+        color: var(--secondary);
+        margin-bottom: 1rem;
+      }
+
+      .service-card h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      /* Amenities Section */
+      .amenities {
+        padding: 4rem 2rem;
+        background-color: var(--primary);
+        color: var(--light);
+      }
+
+      .amenities h2 {
+        text-align: center;
+        margin-bottom: 3rem;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .amenity-item {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      /* Contact Section */
+      .contact {
+        padding: 4rem 2rem;
+        background-color: var(--light);
+      }
+
+      .contact h2 {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--primary);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .contact-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+
+      .contact-info {
+        color: var(--primary);
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+
+      .contact-info h3 {
+        margin-bottom: 1.5rem;
+        color: var(--secondary);
+      }
+
+      .contact-info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .contact-info-item i {
+        font-size: 1.5rem;
+        color: var(--secondary);
+        margin-right: 1rem;
+      }
+
+      .contact-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateX(50px);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        transition: border-color 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        border-color: var(--secondary);
+        outline: none;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      /* Footer Styles */
+      footer {
+        background-color: var(--dark);
+        color: var(--light);
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+      }
+
+      .footer-section {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .footer-section h4 {
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: var(--light);
+        margin-bottom: 0.8rem;
+        display: block;
+        text-decoration: none;
+      }
+
+      .footer-section a:hover {
+        color: var(--secondary);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        color: var(--light);
+        font-size: 1.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0;
+      }
+
+      @media (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .hero-content h1 {
+          font-size: 2.5rem;
+        }
+
+        .contact-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-content h1 {
+          font-size: 2rem;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          The
+          <span
+            style="
+              color: var(--secondary);
+              font-family: 'Lavishly Yours', serif;
+              font-weight: 400;
+              font-style: normal;
+            "
+          >
+            Royal</span
+          >Nest
+        </div>
+        <div class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links">
+          <a href="#">Home</a>
+          <a href="./room.html">Rooms</a>
+          <a href="./services.html">Services</a>
+          <a href="./Amenities.html">Amenities</a>
+          <a href="./contact.html">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="hero-slider">
+        <div class="hero-slide slide-1"></div>
+        <div class="hero-slide slide-2"></div>
+        <div class="hero-slide slide-3"></div>
+      </div>
+      <div class="hero-content">
+        <h1>Welcome to <span
+          style="
+            color: var(--secondary);
+            font-family: 'Lavishly Yours', serif;
+            font-weight: 400;
+            font-style: normal;
+          "
+        >
+         The Royal Nest</span
+        ></h1>
+        <p>Experience unparalleled comfort and elegance</p>
+        <a href="#rooms" class="cta-button">Book Now</a>
+      </div>
+      <div class="slider-nav">
+        <div class="slider-dot active"></div>
+        <div class="slider-dot"></div>
+        <div class="slider-dot"></div>
+      </div>
+    </section>
+
+    <section class="rooms" id="rooms">
+      <h2>Our Rooms</h2>
+      <div class="room-grid">
+        <div class="room-card">
+          <img src="./assets/delureroom.jpg" alt="Deluxe Room" />
+          <div class="room-info">
+            <h3>Deluxe Room</h3>
+            <p>Spacious room with modern amenities</p>
+            <p>From $200/night</p>
+          </div>
+        </div>
+        <div class="room-card">
+          <img src="./assets/exesutvesuite.jpg" alt="Executive Suite" />
+          <div class="room-info">
+            <h3>Executive Suite</h3>
+            <p>Luxury suite with separate living area</p>
+            <p>From $350/night</p>
+          </div>
+        </div>
+        <div class="room-card">
+          <img src="./assets/professionalsuite.jpg" alt="Presidential Suite" />
+          <div class="room-info">
+            <h3>Presidential Suite</h3>
+            <p>Ultimate luxury experience</p>
+            <p>From $500/night</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <h2>Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <i class="fas fa-concierge-bell"></i>
+          <h3>24/7 Room Service</h3>
+          <p>Enjoy gourmet meals and refreshments any time of day</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-car"></i>
+          <h3>Airport Transfer</h3>
+          <p>Luxury transportation to and from the airport</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-user-tie"></i>
+          <h3>Concierge Service</h3>
+          <p>Personal assistance for all your needs</p>
+        </div>
+        <div class="service-card">
+          <i class="fas fa-glass-cheers"></i>
+          <h3>Event Planning</h3>
+          <p>Professional planning for special occasions</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="amenities" id="amenities">
+      <h2>Hotel Amenities</h2>
+      <div class="amenities-grid">
+        <div class="amenity-item">
+          <h3>Swimming Pool</h3>
+          <p>Outdoor infinity pool with stunning views</p>
+        </div>
+        <div class="amenity-item">
+          <h3>Spa & Wellness</h3>
+          <p>Relaxing treatments and massage services</p>
+        </div>
+        <div class="amenity-item">
+          <h3>Fine Dining</h3>
+          <p>Multiple restaurants with international cuisine</p>
+        </div>
+        <div class="amenity-item">
+          <h3>Fitness Center</h3>
+          <p>State-of-the-art equipment and trainers</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2>Contact Us</h2>
+      <div class="contact-container">
+        <div class="contact-info">
+          <h3>Get in Touch</h3>
+          <div class="contact-info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>123 Luxury Avenue, New York, NY 10001</p>
+          </div>
+          <div class="contact-info-item">
+            <i class="fas fa-phone"></i>
+            <p>+1 (555) 123-4567</p>
+          </div>
+          <div class="contact-info-item">
+            <i class="fas fa-envelope"></i>
+            <p>info@luxuryhotel.com</p>
+          </div>
+          <div class="contact-info-item">
+            <i class="fas fa-clock"></i>
+            <p>24/7 Front Desk Service</p>
+          </div>
+        </div>
+        <div class="contact-form">
+          <form>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number:</label>
+              <input type="tel" id="phone" required />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject:</label>
+              <select id="subject" required>
+                <option value="">Select a subject</option>
+                <option value="booking">Room Booking</option>
+                <option value="service">Service Inquiry</option>
+                <option value="feedback">Feedback</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message:</label>
+              <textarea id="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="cta-button">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>About Us</h4>
+          <p>
+            Luxury Hotel offers world-class accommodation and exceptional
+            service in the heart of the city.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="./room.html">Our Rooms</a>
+          <a href="./services.html">Services</a>
+          <a href="./amenities.html">Amenities</a>
+          <a href="./contact.html">Contact</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+        <div class="footer-section">
+          <h4>Contact Info</h4>
+          <p>123 Luxury Avenue</p>
+          <p>New York, NY 10001</p>
+          <p>Phone: +1 (555) 123-4567</p>
+          <p>Email: info@luxuryhotel.com</p>
+        </div>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 The Royal Nest. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile Menu Toggle
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navLinks = document.querySelector(".nav-links");
+
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      // Slider functionality
+      const slider = document.querySelector(".hero-slider");
+      const slides = document.querySelectorAll(".hero-slide");
+      const dots = document.querySelectorAll(".slider-dot");
+      let currentSlide = 0;
+
+      function updateSlider() {
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dots.forEach((dot) => dot.classList.remove("active"));
+        dots[currentSlide].classList.add("active");
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          currentSlide = index;
+          updateSlider();
+        });
+      });
+
+      // Auto slide
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateSlider();
+      }, 5000);
+
+      // GSAP Animations
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Header Animation
+      gsap.to("header", {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.out",
+      });
+
+      // Hero Content Animation
+      gsap.to(".hero-content", {
+        opacity: 1,
+        duration: 1.5,
+        delay: 0.5,
+        ease: "power2.out",
+      });
+
+      // Rooms Section Animation
+      gsap.to(".rooms h2", {
+        scrollTrigger: {
+          trigger: ".rooms",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+      });
+
+      gsap.to(".room-card", {
+        scrollTrigger: {
+          trigger: ".room-grid",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      // Services Section Animation
+      gsap.to(".services h2", {
+        scrollTrigger: {
+          trigger: ".services",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+      });
+
+      gsap.to(".service-card", {
+        scrollTrigger: {
+          trigger: ".services-grid",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      // Amenities Section Animation
+      gsap.to(".amenities h2", {
+        scrollTrigger: {
+          trigger: ".amenities",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+      });
+
+      gsap.to(".amenity-item", {
+        scrollTrigger: {
+          trigger: ".amenities-grid",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      // Contact Section Animation
+      gsap.to(".contact h2", {
+        scrollTrigger: {
+          trigger: ".contact",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+      });
+
+      gsap.to(".contact-info", {
+        scrollTrigger: {
+          trigger: ".contact-container",
+          start: "top center",
+        },
+        opacity: 1,
+        x: 0,
+        duration: 1,
+      });
+
+      gsap.to(".contact-form", {
+        scrollTrigger: {
+          trigger: ".contact-container",
+          start: "top center",
+        },
+        opacity: 1,
+        x: 0,
+        duration: 1,
+      });
+
+      // Footer Animation
+      gsap.to(".footer-section", {
+        scrollTrigger: {
+          trigger: "footer",
+          start: "top bottom",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      gsap.to(".footer-bottom", {
+        scrollTrigger: {
+          trigger: ".footer-bottom",
+          start: "top bottom",
+        },
+        opacity: 1,
+        duration: 1,
+      });
+    </script>
+  </body>
+</html>

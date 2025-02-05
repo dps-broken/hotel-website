@@ -1,0 +1,26 @@
+:root {
+  --primary: #000000; /* Elegant Deep Blue for a sophisticated ambiance */
+  --secondary: #d4af37; /* Royal Gold for a truly premium look */
+  --light: #faf5f0; /* Soft Creamy White for a warm, high-end feel */
+  --dark: #111315; /* Jet Black with a hint of blue for a modern, classy contrast */
+  --accent: #b76e79; /* Muted Rose Gold for a touch of refined luxury */
+}
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap');
+
+/* Hide the scrollbar */
+::-webkit-scrollbar {
+  width: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+}

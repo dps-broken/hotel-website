@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amenities - Luxury Hotel & Resort</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+            @import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap');
+      header {
+        background-color: var(--primary);
+        padding: 1rem;
+        position: fixed;
+        width: 100%;
+        z-index: 100;
+        opacity: 0;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .logo {
+        color: var(--light);
+        font-size: 2rem;
+        font-weight: bold;
+        font-family:  "Lavishly Yours", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: var(--light);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--secondary);
+      }
+
+      .nav-toggle {
+        display: none;
+        color: var(--light);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .nav-toggle:hover {
+        color: var(--secondary);
+      }
+
+      @media screen and (max-width: 768px) {
+        .nav-toggle {
+          display: block;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background-color: var(--primary);
+          flex-direction: column;
+          padding: 1rem;
+          gap: 1rem;
+          text-align: center;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+      }
+
+      .amenities-hero {
+        height: 60vh;
+        background: linear-gradient(
+            rgba(0, 0, 0, 0.409),
+            rgba(0, 0, 0, 0.406)
+          ),
+          url("./assets/luxuryamenities.jpg");
+        background-size: cover;
+        background-position: bottom;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light);
+        text-align: center;
+        padding: 2rem;
+        opacity: 0;
+      }
+
+      .amenities-hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      @media screen and (max-width: 576px) {
+        .amenities-hero h1 {
+          font-size: 2rem;
+        }
+      }
+
+      .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      @media screen and (max-width: 576px) {
+        .amenities-grid {
+          grid-template-columns: 1fr;
+          padding: 2rem 1rem;
+        }
+      }
+
+      .amenity-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .amenity-image {
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .amenity-content {
+        padding: 2rem;
+      }
+
+      .amenity-content h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .amenity-content p {
+        color: var(--dark);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .amenity-features {
+        list-style: none;
+        margin-top: 1rem;
+      }
+
+      .amenity-features li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        color: var(--dark);
+      }
+
+      .amenity-features i {
+        color: var(--secondary);
+        margin-right: 0.5rem;
+      }
+
+      footer {
+        background-color: var(--primary);
+        color: var(--light);
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      @media screen and (max-width: 576px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .footer-section {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .footer-section h4 {
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section a {
+        color: var(--light);
+        text-decoration: none;
+        display: block;
+        margin-bottom: 0.8rem;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: var(--secondary);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        color: var(--light);
+        font-size: 1.5rem;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          The
+          <span
+            style="
+              color: var(--secondary);
+              font-family: 'Lavishly Yours', serif;
+              font-weight: 400;
+              font-style: normal;
+            "
+          >
+            Royal</span
+          >Nest</div>
+        <div class="nav-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links">
+          <a href="./index.html">Home</a>
+          <a href="./services.html">Services</a>
+          <a href="./rooms.html">Rooms</a>
+          <a href="./amenities.html">Amenities</a>
+          <a href="./contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="amenities-hero">
+      
+      <h1>World-Class Amenities</h1>
+    </div>
+
+    <div class="amenities-grid">
+      <div class="amenity-card">
+        <div
+          class="amenity-image"
+          style="
+            background-image: url('./assets/infinitypool.jpg');
+          "
+        ></div>
+        <div class="amenity-content">
+          <h3>Infinity Pool</h3>
+          <p>
+            Experience pure relaxation in our stunning infinity pool overlooking
+            the city skyline.
+          </p>
+          <ul class="amenity-features">
+            <li><i class="fas fa-check"></i> Temperature controlled</li>
+            <li><i class="fas fa-check"></i> Poolside service</li>
+            <li><i class="fas fa-check"></i> Private cabanas</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="amenity-card">
+        <div
+          class="amenity-image"
+          style="
+            background-image: url('./assets/fitnessc.jpg');
+          "
+        ></div>
+        <div class="amenity-content">
+          <h3>State-of-the-art Fitness Center</h3>
+          <p>Stay fit with our premium equipment and professional trainers.</p>
+          <ul class="amenity-features">
+            <li><i class="fas fa-check"></i> 24/7 access</li>
+            <li><i class="fas fa-check"></i> Personal training</li>
+            <li><i class="fas fa-check"></i> Yoga studio</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="amenity-card">
+        <div
+          class="amenity-image"
+          style="
+            background-image: url('./assets/spacen.jpg');
+          "
+        ></div>
+        <div class="amenity-content">
+          <h3>Luxury Spa</h3>
+          <p>
+            Indulge in our world-class spa treatments and wellness programs.
+          </p>
+          <ul class="amenity-features">
+            <li><i class="fas fa-check"></i> Massage therapy</li>
+            <li><i class="fas fa-check"></i> Sauna & steam room</li>
+            <li><i class="fas fa-check"></i> Beauty treatments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="amenity-card">
+        <div
+          class="amenity-image"
+          style="
+            background-image: url('./assets/bisuness.jpg');
+          "
+        ></div>
+        <div class="amenity-content">
+          <h3>Business Center</h3>
+          <p>Stay connected with our fully equipped business center.</p>
+          <ul class="amenity-features">
+            <li><i class="fas fa-check"></i> Meeting rooms</li>
+            <li><i class="fas fa-check"></i> High-speed internet</li>
+            <li><i class="fas fa-check"></i> Printing services</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>About Us</h4>
+          <p>
+            Luxury Hotel offers world-class accommodation and services for our
+            distinguished guests.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="./index.html">Home</a>
+          <a href="./services.html">Services</a>
+          <a href="./rooms.html">Rooms</a>
+          <a href="./amenities.html">Amenities</a>
+          <a href="./contact.html">Contact</a>
+        </div>
+        <div class="footer-section">
+          <h4>Contact Info</h4>
+          <p>123 Luxury Avenue</p>
+          <p>New York, NY 10001</p>
+          <p>Phone: (123) 456-7890</p>
+          <p>Email: info@luxuryhotel.com</p>
+        </div>
+        <div class="footer-section">
+          <h4>Newsletter</h4>
+          <p>Subscribe to our newsletter for special offers and updates.</p>
+          <form>
+            <input type="email" placeholder="Enter your email" />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 The Royal Nest. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Header Animation
+      gsap.to("header", {
+        opacity: 1,
+        duration: 1,
+      });
+
+      // Hero Section Animation
+      gsap.to(".amenities-hero", {
+        opacity: 1,
+        duration: 1,
+      });
+
+      gsap.to(".amenities-hero h1", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.5,
+      });
+
+      // Amenity Cards Animation
+      gsap.to(".amenity-card", {
+        scrollTrigger: {
+          trigger: ".amenities-grid",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      // Footer Animation
+      gsap.to(".footer-section", {
+        scrollTrigger: {
+          trigger: "footer",
+          start: "top bottom",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      gsap.to(".footer-bottom", {
+        scrollTrigger: {
+          trigger: ".footer-bottom",
+          start: "top bottom",
+        },
+        opacity: 1,
+        duration: 1,
+      });
+
+      // Nav Toggle Functionality
+      const navToggle = document.querySelector(".nav-toggle");
+      const navLinks = document.querySelector(".nav-links");
+
+      navToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

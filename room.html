@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Rooms - Luxury Hotel & Resort</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+            @import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap');
+      header {
+        background-color: var(--primary);
+        padding: 1rem;
+        position: fixed;
+        width: 100%;
+        z-index: 100;
+        opacity: 0;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .logo {
+        color: var(--light);
+        font-size:2rem;
+        font-weight: bold;
+        font-family:  "Lavishly Yours", serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: var(--light);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--secondary);
+      }
+
+      .nav-toggle {
+        display: none;
+        color: var(--light);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      @media screen and (max-width: 768px) {
+        .nav-toggle {
+          display: block;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background-color: var(--primary);
+          flex-direction: column;
+          padding: 1rem;
+          gap: 1rem;
+          text-align: center;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+      }
+
+      .rooms-hero {
+        height: 60vh;
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)
+          ),
+          url("./assets/luxuryroom.jpg");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--light);
+        padding-top: 80px;
+        opacity: 0;
+      }
+
+      .rooms-hero h1 {
+        font-size: 3rem;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      @media screen and (max-width: 768px) {
+        .rooms-hero h1 {
+          font-size: 2rem;
+        }
+      }
+
+      .rooms-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      @media screen and (max-width: 480px) {
+        .rooms-grid {
+          grid-template-columns: 1fr;
+          padding: 2rem 1rem;
+        }
+      }
+
+      .room-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .room-image {
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .room-content {
+        padding: 2rem;
+      }
+
+      .room-content h3 {
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .room-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 1rem 0;
+        color: var(--dark);
+      }
+
+      .room-features i {
+        color: var(--secondary);
+      }
+
+      .room-price {
+        color: var(--accent);
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin: 1rem 0;
+      }
+
+      .book-btn {
+        display: inline-block;
+        padding: 0.8rem 1.5rem;
+        background-color: var(--secondary);
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      .book-btn:hover {
+        background-color: var(--primary);
+      }
+
+      footer {
+        background-color: var(--primary);
+        color: var(--light);
+        padding: 4rem 2rem 2rem;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      @media screen and (max-width: 768px) {
+        .footer-content {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .footer-section {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .footer-section h4 {
+        color: var(--secondary);
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-section a {
+        color: var(--light);
+        text-decoration: none;
+        display: block;
+        margin-bottom: 0.8rem;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: var(--secondary);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        color: var(--light);
+        font-size: 1.5rem;
+      }
+
+      .footer-section form {
+        margin-top: 1rem;
+      }
+
+      .footer-section input {
+        padding: 0.5rem;
+        width: 100%;
+        margin-bottom: 1rem;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .footer-section button {
+        padding: 0.5rem 1rem;
+        background-color: var(--secondary);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .footer-section button:hover {
+        background-color: var(--accent);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          The
+          <span
+            style="
+              color: var(--secondary);
+              font-family: 'Lavishly Yours', serif;
+              font-weight: 400;
+              font-style: normal;
+            "
+          >
+            Royal</span
+          >Nest</div>
+        <div class="nav-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="nav-links">
+          <a href="./index.html">Home</a>
+          <a href="./services.html">Services</a>
+          <a href="./room.html">Rooms</a>
+          <a href="./contact.html">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="rooms-hero">
+      <h1>Luxurious Accommodations</h1>
+    </div>
+
+    <div class="rooms-grid">
+      <div class="room-card">
+        <div
+          class="room-image"
+          style="
+            background-image: url('./assets/deluxsuit.jpg');
+          "
+        ></div>
+        <div class="room-content">
+          <h3>Deluxe Suite</h3>
+          <p>
+            Experience ultimate comfort in our spacious deluxe suite with
+            premium amenities.
+          </p>
+          <div class="room-features">
+            <span><i class="fas fa-bed"></i> King Bed</span>
+            <span><i class="fas fa-bath"></i> Jacuzzi</span>
+            <span><i class="fas fa-tv"></i> Smart TV</span>
+          </div>
+          <p class="room-price">$350/night</p>
+          <a href="#book" class="book-btn">Book Now</a>
+        </div>
+      </div>
+
+      <div class="room-card">
+        <div
+          class="room-image"
+          style="
+            background-image: url('./assets/exeutive.jpg');
+          "
+        ></div>
+        <div class="room-content">
+          <h3>Executive Suite</h3>
+          <p>
+            Perfect for business travelers with a dedicated workspace and luxury
+            amenities.
+          </p>
+          <div class="room-features">
+            <span><i class="fas fa-bed"></i> Queen Bed</span>
+            <span><i class="fas fa-desk"></i> Workspace</span>
+            <span><i class="fas fa-wifi"></i> High-speed WiFi</span>
+          </div>
+          <p class="room-price">$280/night</p>
+          <a href="#book" class="book-btn">Book Now</a>
+        </div>
+      </div>
+
+      <div class="room-card">
+        <div
+          class="room-image"
+          style="
+            background-image: url('./assets/family.jpg');
+          "
+        ></div>
+        <div class="room-content">
+          <h3>Family Suite</h3>
+          <p>
+            Spacious accommodation perfect for families with connecting rooms.
+          </p>
+          <div class="room-features">
+            <span><i class="fas fa-bed"></i> Multiple Beds</span>
+            <span><i class="fas fa-couch"></i> Living Area</span>
+            <span><i class="fas fa-utensils"></i> Kitchenette</span>
+          </div>
+          <p class="room-price">$450/night</p>
+          <a href="#book" class="book-btn">Book Now</a>
+        </div>
+      </div>
+
+      <div class="room-card">
+        <div
+          class="room-image"
+          style="
+            background-image: url('./assets/professional.jpg');
+          "
+        ></div>
+        <div class="room-content">
+          <h3>Presidential Suite</h3>
+          <p>
+            The epitome of luxury with panoramic views and exclusive services.
+          </p>
+          <div class="room-features">
+            <span><i class="fas fa-bed"></i> King Bed</span>
+            <span><i class="fas fa-swimming-pool"></i> Private Pool</span>
+            <span><i class="fas fa-concierge-bell"></i> Butler Service</span>
+          </div>
+          <p class="room-price">$800/night</p>
+          <a href="#book" class="book-btn">Book Now</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>About Us</h4>
+          <p>
+            Luxury Hotel offers world-class accommodation and services for our
+            distinguished guests.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <a href="./index.html">Home</a>
+          <a href="./services.html">Services</a>
+          <a href="./room.html">Rooms</a>
+          <a href="./contact.html">Contact</a>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contact Info</h4>
+          <p>123 Luxury Avenue</p>
+          <p>New York, NY 10001</p>
+          <p>Phone: (123) 456-7890</p>
+          <p>Email: info@luxuryhotel.com</p>
+        </div>
+        <div class="footer-section">
+          <h4>Newsletter</h4>
+          <p>Subscribe to our newsletter for special offers and updates.</p>
+          <form>
+            <input type="email" placeholder="Enter your email" />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy;2025 The Royal Nest. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize GSAP
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Header Animation
+      gsap.to("header", {
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+      });
+
+      // Hero Section Animation
+      gsap.to(".rooms-hero", {
+        opacity: 1,
+        duration: 1,
+      });
+
+      gsap.to(".rooms-hero h1", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        delay: 0.5,
+      });
+
+      // Room Cards Animation
+      gsap.to(".room-card", {
+        scrollTrigger: {
+          trigger: ".rooms-grid",
+          start: "top center",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      // Footer Animation
+      gsap.to(".footer-section", {
+        scrollTrigger: {
+          trigger: "footer",
+          start: "top bottom",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      gsap.to(".footer-bottom", {
+        scrollTrigger: {
+          trigger: ".footer-bottom",
+          start: "top bottom",
+        },
+        opacity: 1,
+        duration: 1,
+      });
+
+      // Nav Toggle Functionality
+      const navToggle = document.querySelector(".nav-toggle");
+      const navLinks = document.querySelector(".nav-links");
+
+      navToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>
